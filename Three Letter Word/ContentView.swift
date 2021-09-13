@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var letter = ""
     @State private var counter = 0
+    @State private var selectedLetters = ["", "", ""]
     let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     var body: some View {
         VStack {
@@ -27,24 +28,33 @@ struct ContentView: View {
                         counter = 0
                     }
                 }
+            Text("Tap red box to select the letter")
+            HStack{
+                ForEach(0..<3) { index in
+                    CustomLetterBox(color: Color.red, text: selectedLetters[index])
+                        .onTapGesture {
+                            selectedLetters[index] = letter
+                        }
+                }
+            }
         }
     }
 }
-    struct CustomLetterBox: View {
-        let color: Color
-        let text: String
-        var body: some View{
-            ZStack{
-                color
-                Text(text)
-                    .font(.system(size: 90))
-                    .fontWeight(.heavy)
-            }
-            .frame(width: 120, height: 120, alignment: .center)
+struct CustomLetterBox: View {
+    let color: Color
+    let text: String
+    var body: some View{
+        ZStack{
+            color
+            Text(text)
+                .font(.system(size: 90))
+                .fontWeight(.heavy)
         }
+        .frame(width: 120, height: 120, alignment: .center)
     }
-    struct ContentView_Previews: PreviewProvider {
-        static var previews: some View {
-            ContentView()
-        }
+}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
     }
+}
