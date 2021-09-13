@@ -18,25 +18,33 @@ struct ContentView: View {
                 .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 .padding()
             Text("Tap the grey box to change the letter")
-            
+            CustomLetterBox(color: Color.gray, text: letter)
+                .onTapGesture {
+                    let position = alphabet.index(alphabet.startIndex, offsetBy: counter)
+                    letter = String(alphabet[position])
+                    counter += 1
+                    if counter == alphabet.count {
+                        counter = 0
+                    }
+                }
         }
     }
 }
-struct CustomLetterBox: View {
-    let color: Color
-    let text: String
-    var body: some View{
-        ZStack{
-            color
-            Text(text)
-                .font(.system(size: 90))
-                .fontWeight(.heavy)
+    struct CustomLetterBox: View {
+        let color: Color
+        let text: String
+        var body: some View{
+            ZStack{
+                color
+                Text(text)
+                    .font(.system(size: 90))
+                    .fontWeight(.heavy)
+            }
+            .frame(width: 120, height: 120, alignment: .center)
         }
-        .frame(width: 120, height: 120, alignment: .center)
     }
-}
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+        }
     }
-}
